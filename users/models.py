@@ -26,7 +26,7 @@ class Profile(models.Model):
 
             tmp = BytesIO()
             img.save(tmp, 'PNG')
-            print(self.photo)
+            
                 # tmp.seek(0)
 
             self.image = File(tmp, 'image.png')

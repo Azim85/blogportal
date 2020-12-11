@@ -38,8 +38,8 @@
                     </div>
                     <div class='card-footer'>
                         <small>{{post.post_added|date:'d F, Y'}}</small> 
-                        <a href="" class=" ml-3">Edit</a>
-                        <a href="#" class=" ml-3 text-danger">Delete</a>
+                        <a href="{% url 'main:post-edit' post.id %}" class=" ml-3">Edit</a>
+                        <a href="{% url 'main:post-delete' post.id %}" class=" ml-3 text-danger">Delete</a>
                     </div>
                 </div>
             {% endfor %}

@@ -8,7 +8,9 @@ app_name = 'main'
 
 urlpatterns=[
         path('', views.index, name='index'),
-        path('create/', views.post_create, name='post-create')
+        path('create/', views.post_create, name='post-create'),
+        path('edit/<int:post_id>/', views.post_edit, name='post-edit'),
+        path('delete/<int:post_id>/', views.post_delete, name='post-delete')
 ]
 
 if settings.DEBUG:

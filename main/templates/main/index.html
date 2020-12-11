@@ -15,8 +15,8 @@
                 <div class='card-footer'>
                     <small>{{post.post_added|date:'d F, Y'}}</small>
                     {% if post.author == request.user %}
-                        <a href="#" class="btn ml-3 text-primary">Edit</a>
-                        <a href="#" class="btn ml-2 text-danger">Delete</a>
+                        <a href="{% url 'main:post-edit' post.id %}" class="btn ml-3 text-primary">Edit</a>
+                        <a href="{% url 'main:post-delete' post.id %}" class="btn ml-2 text-danger">Delete</a>
                     {% endif %}
                 </div>
                 </div>

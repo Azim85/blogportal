@@ -20,3 +20,22 @@ def post_create(request):
             return redirect('main:index')
     form = PostForm()
     return render(request, 'main/post_create.html', {'form':form})
+
+def post_edit(request, post_id):
+    from datetime import datetime
+    post = Post.objects.get(id=post_id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.post_added = datetime.now()
+            user.author = request.user
+            user.save()
+            return redirect('profile')
+    form = PostForm(instance=post)
+    return render(request, 'main/post_edit.html', {'post':post, 'form':form, 'id':post_id})
+
+def post_delete(request, post_id):
+    post = Post.objects.get(id=post_id)
+    post.delete()
+    return redirect('main:index')
