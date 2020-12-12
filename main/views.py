@@ -38,4 +38,6 @@ def post_edit(request, post_id):
 def post_delete(request, post_id):
     post = Post.objects.get(id=post_id)
     post.delete()
+    if request.GET.get('from') == 'profile':
+        return redirect('profile')
     return redirect('main:index')

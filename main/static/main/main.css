@@ -1,0 +1,10 @@
+.bg-body{
+    background-image: url("main/static/main/body.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+}
+
+.my_shadow{
+    box-shadow: 10px 10px 15px rgba(0,0,0, .5);
+}

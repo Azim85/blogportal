@@ -38,6 +38,7 @@ def logout_check(request):
 @login_required
 def profile(request):
     posts = Post.objects.filter(author=request.user.id).order_by('-post_added')
+    count = Post.objects.filter(author=request.user.id).count()
     if request.method == 'POST':
         form_u = ProfileForm(request.POST, instance=request.user )
         form_p = ProfilePicForm(request.POST, request.FILES, instance=request.user.profile)
@@ -47,4 +48,4 @@ def profile(request):
             return redirect('profile')   
     form_u = ProfileForm(instance=request.user)
     form_p = ProfilePicForm(instance=request.user.profile)
-    return render(request, 'users/profile.html', {'form_u':form_u, 'form_p':form_p, 'posts':posts})
+    return render(request, 'users/profile.html', {'form_u':form_u, 'form_p':form_p, 'posts':posts, 'count':count})

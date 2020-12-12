@@ -4,16 +4,16 @@
 
 {% block content %}
         <div class="container mt-5 pt-5">
-            <h2 class="text-center text-uppercase border-bottom pb-2">User Profile</h2>
-            <div class="row">
-                <div class="col-lg-5 d-flex flex-column align-items-center">
-                    <img src="{{user.profile.image.url}}" alt="img" class="shadow-lg" style="width:300px; height:300px; border-radius: 50%;" >
-                <h2>{{user.username}}</h2>
-                <p>{{user.email}}</p>
+            <h2 class="text-center text-uppercase border-bottom border-warning py-2  text-warning">User Profile</h2>
+            <div class="row pt-3 justify-content-center">
+                <div class="col-lg-5 d-flex flex-column align-items-center my_shadow rounded py-5 px-5">
+                    <img src="{{user.profile.image.url}}" alt="img" class="my_shadow" style="width:250px; height:250px; border-radius: 50%;" >
+                <h2 class="text-muted mt-2">{{user.username}}</h2>
+                <p class="text-muted">{{user.email}}</p>
 
                 </div>
                 <div class="col-lg-5">
-                    <form action="{% url 'profile' %}" method='post' enctype="multipart/form-data">
+                    <form action="{% url 'profile' %}" method='post' enctype="multipart/form-data" class="text-light my_shadow py-4 px-5 rounded">
                         {% csrf_token%}
                         {{form_u |crispy}}
                         {{form_p | crispy}}
@@ -24,24 +24,28 @@
         </div>
 
         <div class="container">
-            <h2 class="text-center text-uppercase border-bottom pb-2">User Posts</h2>
+            <h2 class="text-center text-uppercase text-warning border-bottom border-warning mt-5 py-2">User Posts ({{count}})</h2>
             {% for post in posts %}        
-            <div class="card w-50 mx-auto my-3 shadow-lg">
-                <div class="card-header d-flex align-items-center">
-                    <img src="{{post.author.profile.image.url}}" alt="img" style="width:40px; height:40px; border-radius: 50%;"  class="mr-3">
-                        <small>{{post.author}}</small>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{post.title}}</h5>
-                        <p class="card-text">{{post.content}}</p>
-                        
-                    </div>
-                    <div class='card-footer'>
-                        <small>{{post.post_added|date:'d F, Y'}}</small> 
-                        <a href="{% url 'main:post-edit' post.id %}" class=" ml-3">Edit</a>
-                        <a href="{% url 'main:post-delete' post.id %}" class=" ml-3 text-danger">Delete</a>
-                    </div>
+            <div class="card w-75 mx-auto my-3 my_shadow bg-dark border-0">
+                <div class="card-header d-flex flex-wrap align-items-center border-secondary bg-dark" >
+                    <img src="{{ post.author.profile.image.url }}" alt="img"
+                         style="width:40px; height:40px; border-radius: 50%;" class="mr-3">
+                    <small class="text-light"> Created by <b class="text-warning">you</b></small>
+                    <small class="text-light ml-3">on {{post.post_added|date:'d F, Y'}}</small>
+                    {% if post.author == request.user %}
+                        <a href="{% url 'main:post-edit' post.id %}" class="btn btn-info ml-3 text-light">Edit</a>
+                        <a href="{% url 'main:post-delete' post.id %}" class="btn btn-danger ml-2  text-light">Delete</a>
+                    {% endif %}
+                    <small class="ml-auto"><a href="" class="ml-auto btn btn-outline-info text-white mt-sm-2">More</a></small>
                 </div>
+                <div class="card-body">
+                    <h5 class="card-title text-light">{{ post.title }}</h5>
+                    <p class="card-text text-light">{{ post.content | truncatechars:100}}</p>
+                </div>
+            </div>    
+            {% empty %}
+                <h1 class="text-center text-warning">You have not any posts yet! <small><a href="{% url 'main:post-create' %}">Create now</a></small></h1>
             {% endfor %}
         </div>
+        
 {% endblock content %}

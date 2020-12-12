@@ -4,44 +4,26 @@
     <div class="container mt-5 pt-4">
         {% for post in posts %}
             {% if post.is_published %}
-                <div class="card w-50 mx-auto my-3 shadow-lg">
-                    <div class="card-header d-flex align-items-center">
+                <div class="card w-75 mx-auto my-3 my_shadow bg-dark border-0">
+                    <div class="card-header d-flex align-items-center border-secondary bg-dark" >
                         <img src="{{ post.author.profile.image.url }}" alt="img"
                              style="width:40px; height:40px; border-radius: 50%;" class="mr-3">
-                        <small>{{ post.author }}</small>
+                        <small class="text-light"> Created by <b class="text-warning">{{ post.author }}</b></small>
+                        <small class="text-light ml-3">{{post.post_added|date:'d F, Y'}}</small>
+                        {% if post.author == request.user %}
+                            <a href="{% url 'main:post-edit' post.id %}" class="btn btn-info ml-3 text-light">Edit</a>
+                            <a href="{% url 'main:post-delete' post.id %}" class="btn btn-danger ml-2 text-light">Delete</a>
+                        {% endif %}
+                        <small class="ml-auto"><a href="" class="ml-auto btn btn-outline-info text-white">More</a></small>
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ post.title }}</h5>
-                        <p class="card-text">{{ post.content }}</p>
-                    </div>
-                    <div class='card-footer'>
-                        <small>{{ post.post_added|date:'d F, Y' }}</small>
-                        {% if post.author == request.user %}
-                            <a href="#" class="btn ml-3 text-primary">Edit</a>
-                            <a href="#" class="btn ml-2 text-danger">Delete</a>
-                        {% endif %}
+                        <h5 class="card-title text-light">{{ post.title }}</h5>
+                        <p class="card-text text-light">{{ post.content | truncatechars:100}}</p>
                     </div>
                 </div>
-<<<<<<< HEAD
-                <div class="card-body">
-                    <h5 class="card-title">{{post.title}}</h5>
-                    <p class="card-text">{{post.content}}</p>
-                </div>
-                <div class='card-footer'>
-                    <small>{{post.post_added|date:'d F, Y'}}</small>
-                    {% if post.author == request.user %}
-                        <a href="{% url 'main:post-edit' post.id %}" class="btn ml-3 text-primary">Edit</a>
-                        <a href="{% url 'main:post-delete' post.id %}" class="btn ml-2 text-danger">Delete</a>
-                    {% endif %}
-                </div>
-                </div>
+                {% endif %}
+                {% empty %}
+                <h1 class="text-center text-warning">There is no posts yet!</h1>
                 {% endfor %}
         </div>
-=======
-                {% else %}
-                    <h2 class="text-center text-danger">Yangliklar hozircha yo'q!</h2>
-            {% endif %}
-        {% endfor %}
-    </div>
->>>>>>> ebd5fc622782a8686c4e08ef6fe32d47ce982647
 {% endblock content %}
