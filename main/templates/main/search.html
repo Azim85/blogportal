@@ -1,13 +1,12 @@
 {% extends 'main/base.html' %}
 
-
 {% block content %}
-    <div class="container mt-5 pt-5">
+    <div class="container mt-5 pt-4">
 
+       
         
-        {% for post in posts %}
-            {% if post.is_published %}
-                <div class="card w-75 mx-auto my-4 my_shadow bg-dark border-0">
+        {% for post in object_list %}
+                <div class="card w-75 mx-auto my-3 my_shadow bg-dark border-0">
                     <div class="card-header d-flex align-items-center border-secondary bg-dark" >
                         <img src="{{ post.author.profile.image.url }}" alt="img"
                              style="width:40px; height:40px; border-radius: 50%;" class="mr-3">
@@ -21,34 +20,12 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title text-light">{{ post.title }}</h5>
-                            <p class="card-text text-light">{{ post.content | truncatechars:100}}</p>
-                        
+                        <p class="card-text text-light">{{ post.content | truncatechars:100}}</p>
                     </div>
                 </div>
-                {% endif %}
                 {% empty %}
-                <h1 class="text-center text-warning">There is no posts yet!</h1>
+                <h1 class="text-center text-warning pt-5">Nothing found......</h1>
                 {% endfor %}
-        </div>
-
-        <div class="row justify-content-center pt-2 pb-2">
-            <div class="pagination">
-                <span class="step-links">
-                    {% if page_obj.has_previous %}
-                        <a href="?page=1" class="btn btn-outline-info">&laquo; first</a>
-                        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-info">previous</a>
-                    {% endif %}
-            
-                    <span class="current text-light btn btn-info">
-                        {{ page_obj.number }}
-                    </span>
-            
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-info">next</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-info">last &raquo;</a>
-                    {% endif %}
-                </span>
-            </div>
         </div>
         
         

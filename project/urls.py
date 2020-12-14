@@ -18,11 +18,15 @@ from django.urls import path, include
 from users import views as users_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
+from django.utils.translation import ugettext_lazy as _
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', users_views.register, name='register'),
+    path('validate_username/', users_views.validate_username, name='validate_username'),
     path('profile/', users_views.profile, name='profile'),
     path('login/', users_views.login_check, name='login'),
     path('logout/', users_views.logout_check, name='logout'),
@@ -31,4 +35,13 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+    
+    
+urlpatterns += i18n_patterns(
+    path('register/', users_views.register, name='register'),
+    path('validate_username/', users_views.validate_username, name='validate_username'),
+    path('profile/', users_views.profile, name='profile'),
+    path('login/', users_views.login_check, name='login'),
+    path('logout/', users_views.logout_check, name='logout'),
+    path('', include('main.urls'))
+)

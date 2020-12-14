@@ -2,8 +2,11 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<div class="row w-100 mx-0 errors" style="position: absolute; top:60px;">
+    <!-- <div class="alert alert-danger text-center w-100 rounded-0 errors"></div> -->
+</div>
         <div class="row mt-5 pt-5 justify-content-center pb-3">
-            <div class="col-lg-6 px-5 py-3 my_shadow rounded">
+            <div class="col-lg-6 px-5 py-3 mt-4 my_shadow rounded">
                 <h3 class="text-uppercase text-warning">Register</h3>
                 <form action="{% url 'register' %}" method="post" class="text-light">
                     {% csrf_token %}
@@ -13,3 +16,25 @@
             </div>
         </div>
 {% endblock content %}
+
+{% block javascript %}
+<script>
+    $("#id_username").change(function () {
+      var username = $(this).val();
+
+      $.ajax({
+        url: '/validate_username/',
+        data: {
+          'username': username
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            $('.errors').html('<div class="alert alert-danger text-center w-100 rounded-0">A user with this username already exists please choose another one.</div>')
+          }
+        }
+      });
+
+    });
+  </script>
+{% endblock javascript %}

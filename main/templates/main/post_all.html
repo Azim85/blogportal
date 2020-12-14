@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <div class="container mt-5 pt-4">
+        {% for post in posts %}
+            {% if post.is_published %}
+                <div class="card w-75 mx-auto my-3 my_shadow bg-dark border-0">
+                    <div class="card-header d-flex align-items-center border-secondary bg-dark" >
+                        <img src="{{ post.author.profile.image.url }}" alt="img"
+                             style="width:40px; height:40px; border-radius: 50%;" class="mr-3">
+                        <small class="text-light"> Created by <b class="text-warning">{{ post.author }}</b></small>
+                        <small class="text-light ml-3">{{post.post_added|date:'d F, Y'}}</small>
+                        {% if post.author == request.user %}
+                            <a href="{% url 'main:post-edit' post.id %}" class="btn btn-info ml-3 text-light">Edit</a>
+                            <a href="{% url 'main:post-delete' post.id %}" class="btn btn-danger ml-2 text-light">Delete</a>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <img src="{{post.image.url}}" alt="img" class="w-100">
+                        <h5 class="card-title text-light">{{ post.title }}</h5>
+                        <p class="card-text text-light">{{ post.content}}</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+        </div>
+{% endblock content %}

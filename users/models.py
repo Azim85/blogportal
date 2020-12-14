@@ -7,7 +7,7 @@ from django.core.files import File
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Foydalanuvhci')
-    image = models.ImageField(default='default.jpg', upload_to="profile_pics", blank=True,
+    image = models.ImageField(default='guest.jpg', upload_to="profile_pics", blank=True,
                               null=True,
                               width_field='img_w',
                               height_field='img_h',

@@ -2,8 +2,9 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-        <div class="row mt-5 pt-5 justify-content-center">
-            <div class="col-lg-6 px-5 py-3 my_shadow rounded">
+        <div class="row mt-5 pt-5  justify-content-center">
+           
+            <div class="col-lg-6 px-5 py-3 mt-5 my_shadow rounded">
                 <h3 class="text-uppercase text-warning">Login</h3>
                 <form action="{% url 'login' %}" method="post" class="text-light">
                     {% csrf_token %}
